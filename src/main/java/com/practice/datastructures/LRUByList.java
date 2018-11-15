@@ -2,7 +2,7 @@ package com.practice.datastructures;
 
 public class LRUByList<T> {
 
-    class Node<T> {
+    class Node {
         private T val;
         private Node pre;
         private Node next;
@@ -13,12 +13,42 @@ public class LRUByList<T> {
     }
 
     private volatile int size = 0;
-    private volatile int threshhold = 3;
+    private final int threshhold = 3;
     private Node head;
     private Node tail;
 
     LRUByList() {
 
+    }
+
+    private Node get(T t) {
+        Node node = head;
+        while (node != null) {
+            if (t.equals(node.val)) {
+                break;
+            } else {
+                node = node.next;
+            }
+        }
+        if (node != null) {
+            if (node == head) {
+            } else if (node == tail) {
+                tail.pre.next = null;
+                tail.next = head;
+                head.pre = tail;
+                tail.pre = null;
+                head = tail;
+            }else {
+                node.pre.next = node.next;
+                node.next.pre = node.pre;
+                node.next = head;
+                head.pre = node;
+                node.pre = null;
+                head = node;
+            }
+            return head;
+        }
+        return null;
     }
 
 
@@ -63,6 +93,12 @@ public class LRUByList<T> {
         lruByList.put(2);
         lruByList.put(3);
         lruByList.put(4);
+        System.out.println(lruByList.toString());
+        lruByList.get(3);
+        System.out.println(lruByList.toString());
+        lruByList.get(2);
+        System.out.println(lruByList.toString());
+        lruByList.get(3);
         System.out.println(lruByList.toString());
     }
 
