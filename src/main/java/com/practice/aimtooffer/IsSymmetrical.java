@@ -8,9 +8,6 @@ public class IsSymmetrical {
         if (pRoot == null) {
             return true;
         } else {
-            if (pRoot.left == null && pRoot.right != null) return false;
-            if (pRoot.left != null && pRoot.right == null) return false;
-            if (pRoot.left == null && pRoot.right == null) return true;
             return isMirrorNode(pRoot.left, pRoot.right);
         }
     }
