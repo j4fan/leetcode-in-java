@@ -1,5 +1,8 @@
 package com.practice.aimtooffer;
 
+/**
+ * 判断一颗二叉树是否为平衡树
+ */
 public class IsBalancedTree {
 
     public boolean isBalancedSolution(TreeNode root) {
