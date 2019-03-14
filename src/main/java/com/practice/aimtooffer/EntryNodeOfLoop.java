@@ -6,40 +6,42 @@ package com.practice.aimtooffer;
 public class EntryNodeOfLoop {
 
     public ListNode entryNodeOfLoop(ListNode pHead) {
-        if (pHead == null || pHead.next == null) {
-            return null;
-        }
-        ListNode node = meetNode(pHead);
-        ListNode tmp = node;
-        int count = 1;
-        while (node.next != tmp) {
-            node = node.next;
-            count++;
-        }
+        if (pHead == null || pHead.next == null) return null;
+        //创建两个指针，一个速度为1，一个速度为2
         ListNode fast = pHead;
         ListNode slow = pHead;
-        for (int i = 0; i < count; i++) {
-            fast = fast.next;
-        }
-        while (fast != slow) {
-            slow = slow.next;
-            fast = fast.next;
-        }
-        return slow;
-    }
-
-
-    private ListNode meetNode(ListNode node) {
-        ListNode fast = node;
-        ListNode slow = node;
-        while (fast.next.next != slow.next) {
+        int lengthOfCircle = 0;
+        do {
+            if (fast.next == null || fast.next.next == null) return null;
             fast = fast.next.next;
             slow = slow.next;
+            lengthOfCircle++;
+        } while (fast != slow);
+        ListNode formal = pHead;
+        ListNode letter = pHead;
+        for (int i = 0; i < lengthOfCircle; i++) {
+            letter = letter.next;
         }
-        return slow.next;
+        while (formal != letter) {
+            formal = formal.next;
+            letter = letter.next;
+        }
+        return formal;
     }
 
-    public class ListNode {
+    public static void main(String[] args) {
+        EntryNodeOfLoop entryNodeOfLoop = new EntryNodeOfLoop();
+        ListNode node = new ListNode(5);
+        ListNode next = new ListNode(3);
+        ListNode end = new ListNode(4);
+        node.next = next;
+        next.next = end;
+        ListNode entry = entryNodeOfLoop.entryNodeOfLoop(node);
+        System.out.println(entry);
+    }
+
+
+    public static class ListNode {
         int val;
         ListNode next = null;
 
