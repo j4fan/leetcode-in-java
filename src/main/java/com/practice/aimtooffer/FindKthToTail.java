@@ -5,25 +5,21 @@ package com.practice.aimtooffer;
  */
 public class FindKthToTail {
 
-    public ListNode findKthToTail(ListNode head,int k){
-        if(head==null){
-            return null;
+    public ListNode findKthToTail(ListNode head, int k) {
+        if (k <= 0) return null;
+        if (head == null) return null;
+        ListNode formal = head;
+        ListNode letter = head;
+        //formal走k步
+        for (int i = 0; i < k - 1; i++) {
+            if (formal.next == null) return null;
+            formal = formal.next;
         }
-        if(k<=0){
-            return null;
+        while (formal.next != null) {
+            formal = formal.next;
+            letter = letter.next;
         }
-        ListNode pre = head;
-        for(int i=1;i<k;i++){
-            if(head.next==null){
-                return null;
-            }
-            head = head.next;
-        }
-        while(head.next!=null){
-            head = head.next;
-            pre = pre.next;
-        }
-        return pre;
+        return letter;
     }
 
     public class ListNode {

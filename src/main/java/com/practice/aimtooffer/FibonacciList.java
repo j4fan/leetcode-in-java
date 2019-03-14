@@ -14,38 +14,31 @@ public class FibonacciList {
      * @return
      */
     public int FibonacciInRecursion(int n) {
-        if (n == 0) {
-            return 0;
-        } else if (n == 1) {
-            return 1;
-        } else {
-            return FibonacciInRecursion(n - 1) + FibonacciInRecursion(n - 2);
-        }
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        return FibonacciInRecursion(n - 1) + FibonacciInRecursion(n - 2);
     }
 
     /**
      * using loop to reduce the use of space
      */
     public int FinonacciInLoop(int n) {
-        if (n == 0) {
-            return 0;
-        } else if (n == 1) {
-            return 1;
-        } else {
-            int formal = 0;
-            int letter = 1;
-            for (int i = 1; i < n; i++) {
-                int tmp = formal + letter;
-                formal = letter;
-                letter = tmp;
-            }
-            return letter;
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        int formal = 0;
+        int letter = 1;
+        for (int i = 1; i < n; i++) {
+            int tmp = formal + letter;
+            formal = letter;
+            letter = tmp;
         }
+        return letter;
     }
 
     public static void main(String[] args) {
         System.out.println(new FibonacciList().FibonacciInRecursion(10));
         System.out.println(new FibonacciList().FinonacciInLoop(10));
+
     }
 
 }
