@@ -1,30 +1,20 @@
 package com.practice.aimtooffer;
 
 /**
- * 输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
+ * task1:输入两棵二叉树A，B，判断B是不是A的子结构。（ps：我们约定空树不是任意一个树的子结构）
  */
 public class CheckRelationBetweenTrees {
 
-    public static boolean hasSubtree(TreeNode root1, TreeNode root2) {
-        if (root1 == null || root2 == null) {
-            return false;
-        }
-        if (treeEquals(root1, root2)) {
-            return true;
-        } else if ((root1.left != null && hasSubtree(root1.left, root2)) || (root1.right != null && hasSubtree(root1.right, root2))) {
-            return true;
-        }
-        return false;
+    public static boolean HasSubtree(TreeNode root1, TreeNode root2) {
+        if (root1 == null || root2 == null) return false;
+        if (doesTree1HavaTree2(root1, root2)) return true;
+        return HasSubtree(root1.left, root2) || HasSubtree(root1.right, root2);
     }
 
-    private static boolean treeEquals(TreeNode root1, TreeNode root2) {
-        if (root1 == null && root2 == null) {
-            return true;
-        }
-        if (root1 != null && root2 != null && root1.val == root2.val) {
-            return treeEquals(root1.left, root2.left) && treeEquals(root1.right, root2.right);
-        }
-        return false;
+    private static boolean doesTree1HavaTree2(TreeNode node1, TreeNode node2) {
+        if(node2==null) return true;
+        if(node1==null||node1.val!=node2.val) return false;
+        return doesTree1HavaTree2(node1.left, node2.left) && doesTree1HavaTree2(node1.right, node2.right);
     }
 
     static class TreeNode {
@@ -38,22 +28,26 @@ public class CheckRelationBetweenTrees {
     }
 
     public static void main(String[] args) {
-        TreeNode root1 = new TreeNode(1);
-        TreeNode left = new TreeNode(1);
-        TreeNode right = new TreeNode(2);
-        TreeNode leftOne = new TreeNode(4);
-        TreeNode leftTwo = new TreeNode(5);
-        root1.left = left;
-        root1.right = right;
-        left.left = leftOne;
-        left.right = leftTwo;
+        TreeNode root = new TreeNode(8);
+        TreeNode rootLeft = new TreeNode(8);
+        TreeNode rootRight = new TreeNode(7);
+        root.left = rootLeft;
+        root.right = rootRight;
+        TreeNode leftLeft = new TreeNode(9);
+        TreeNode leftRight = new TreeNode(2);
+        rootLeft.left = leftLeft;
+        rootLeft.right = leftRight;
+        TreeNode rightLeft = new TreeNode(4);
+        TreeNode rightRight = new TreeNode(7);
+        rootRight.left = rightLeft;
+        rootRight.right = rightRight;
 
-        TreeNode root2 = new TreeNode(1);
-        TreeNode root2Left = new TreeNode(4);
-        TreeNode root2Right = new TreeNode(5);
-        root2.left = root2Left;
-        root2.right = root2Right;
-
-        System.out.println(hasSubtree(root1,root2));
+        TreeNode testRoot = new TreeNode(8);
+        TreeNode testLeft = new TreeNode(8);
+        TreeNode testRight = new TreeNode(7);
+        testRoot.left = testLeft;
+        testRoot.right = testRight;
+        System.out.println(HasSubtree(root, testRoot));
     }
+
 }
