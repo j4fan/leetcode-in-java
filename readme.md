@@ -148,3 +148,20 @@
         return Math.abs(getDepth(node.left) - getDepth(node.right)) > 1 ? -1 : Math.max(getDepth(node.left), getDepth(node.right));
     }
 
+6.对称二叉树
+-
+>请实现一个函数，用来判断一颗二叉树是不是对称的。注意，如果一个二叉树同此二叉树的镜像是同样的，定义其为对称的。
+
+思路：递归求解的时候应该注意的是，不是所有节点都完全对称，这个和题意还是有区别的<br><br>
+代码如下:
+
+    private static boolean isSymmetrical(TreeNode pRoot) {
+        if(pRoot==null) return true;
+        return isMirrorNode(pRoot.left,pRoot.right);
+    }
+
+    private static boolean isMirrorNode(TreeNode left, TreeNode right) {
+        if(left==null&&right==null) return true;
+        if((left==null&&right!=null)||(left!=null&&right==null)||left.val!=right.val) return false;
+        return isMirrorNode(left.left, right.right)&&isMirrorNode(left.right,right.left);
+    }
