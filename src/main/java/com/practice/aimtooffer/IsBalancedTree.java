@@ -6,25 +6,16 @@ package com.practice.aimtooffer;
 public class IsBalancedTree {
 
     public boolean isBalancedSolution(TreeNode root) {
-        if (root == null) {
-            return false;
-        } else if (Math.abs(height(root.left) - height(root.right)) > 1) {
-            return false;
-        } else {
-            return isBalancedSolution(root.left) && isBalancedSolution(root.right);
-        }
+        if (root == null) return true;
+        return getDepth(root) != -1;
     }
 
-
-    private int height(TreeNode node) {
-        if (node == null) {
-            return 0;
-        } else {
-            int left = height(node.left);
-            int right = height(node.right);
-            return left > right ? left + 1 : right + 1;
-        }
+    private int getDepth(TreeNode node) {
+        if (node == null) return 0;
+        if (getDepth(node.left) == -1 || getDepth(node.right) == -1) return -1;
+        return Math.abs(getDepth(node.left) - getDepth(node.right)) > 1 ? -1 : Math.max(getDepth(node.left), getDepth(node.right));
     }
+
 
     class TreeNode {
         int val = 0;
