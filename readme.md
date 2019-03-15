@@ -109,3 +109,42 @@
         }
         return letter;
     }
+
+5.平衡二叉树
+-
+>输入一棵二叉树，判断该二叉树是否是平衡二叉树。
+
+附上`平衡二叉树`的性质：它是一棵空树或它的左右两个子树的高度差的绝对值不超过1，并且左右两个子树都是一棵平衡二叉树。这个方案很好的解决了二叉查找树退化成`链表`的问题，把插入，查找，删除的时间复杂度最好情况和最坏情况都维持在O(logN)。但是频繁旋转会使插入和删除牺牲掉O(logN)左右的时间，不过相对二叉查找树来说，时间上稳定了很多。
+ 
+思路一`[自上而下]`：判断根节点左右子树的高度，确定该节点是平衡的，再递归判断左右子树是否为平衡二叉树<br>
+这种思路有个弊端，在递归的判断子树是否为平衡树的过程中，多次求了每个子树的高度，相当于底层的节点被遍历了很多遍<br><br>
+代码如下:
+
+	public boolean IsBalanced_Solution(TreeNode root) {
+	        if (root == null) return true;
+	        return (Math.abs(getHeightOfTree(root.left) - getHeightOfTree(root.right)) <= 1)
+	                && IsBalanced_Solution(root.left) && IsBalanced_Solution(root.right);
+    }
+
+    private int getHeightOfTree(TreeNode treeNode) {
+        if (treeNode == null) return 0;
+        if (treeNode.left == null && treeNode.right == null) return 1;
+        int leftLength = getHeightOfTree(treeNode.left);
+        int rightLength = getHeightOfTree(treeNode.right);
+        return 1+Math.max(leftLength,rightLength);
+    }
+
+思路二`[自下而上]`：自底向上求高度，如果存在一个节点不是平衡树，则返回-1<br><br>
+代码如下:
+	
+	public boolean isBalancedSolution(TreeNode root) {
+	        if (root == null) return true;
+	        return getDepth(root) != -1;
+    }
+
+    private int getDepth(TreeNode node) {
+        if (node == null) return 0;
+        if (getDepth(node.left) == -1 || getDepth(node.right) == -1) return -1;
+        return Math.abs(getDepth(node.left) - getDepth(node.right)) > 1 ? -1 : Math.max(getDepth(node.left), getDepth(node.right));
+    }
+
