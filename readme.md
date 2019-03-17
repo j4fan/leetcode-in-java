@@ -165,3 +165,26 @@
         if((left==null&&right!=null)||(left!=null&&right==null)||left.val!=right.val) return false;
         return isMirrorNode(left.left, right.right)&&isMirrorNode(left.right,right.left);
     }
+    
+7.跳台阶
+-
+>一只青蛙一次可以跳上1级台阶，也可以跳上2级。求该青蛙跳上一个n级的台阶总共有多少种跳法（先后次序不同算不同的结果）。
+
+思路：这个问题其实是一个动态规划的问题，动态规划的问题可以参考下<<算法导论>>，可以做一个简单的思考，当青蛙处于N层台阶的时候，它的选择是N-1台阶走一步+N-2台阶走两步，
+这两种情况，这样既可得到关系式:f(N)=f(N-1)+f(N-2)，关于性能和优化的问题可以参考斐波拉契那道题目。<br><br>
+代码如下：
+
+    public int jump(int target) {
+        if (target == 1) {
+            return 1;
+        } else if (target == 2) {
+            return 2;
+        } else {
+            return jump(target - 1) + jump(target - 2);
+        }
+    }
+    
+8.旋转数组的最小数字
+-
+>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+
