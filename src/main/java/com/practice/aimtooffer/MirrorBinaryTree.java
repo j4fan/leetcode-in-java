@@ -24,5 +24,6 @@ public class MirrorBinaryTree {
             this.val = val;
         }
     }
+
 }
 

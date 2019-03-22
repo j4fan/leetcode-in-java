@@ -213,4 +213,19 @@
             return array[left];
     }
     
-9.
+9.二叉树的镜像
+-
+>操作给定的二叉树，将其变换为源二叉树的镜像。
+
+思路：这题的思路是先将节点的左右子节点交换，对每个子节点，继续递归交换节点。<br><br>
+代码如下：
+
+    public void Mirror(TreeNode root) {
+        if (root != null) {
+            TreeNode tmp = root.left;
+            root.left = root.right;
+            root.right = tmp;
+            Mirror(root.left);
+            Mirror(root.right);
+        }
+    }
