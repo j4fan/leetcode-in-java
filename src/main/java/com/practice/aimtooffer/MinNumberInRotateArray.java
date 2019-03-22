@@ -29,7 +29,7 @@ public class MinNumberInRotateArray {
         }
         return array[left];
     }
-：
+
     public static void main(String[] args) {
         int[] arrays = new int[]{1,2,3,4,5,0};
         MinNumberInRotateArray minNumberInRotateArray = new MinNumberInRotateArray();
