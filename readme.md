@@ -186,5 +186,31 @@
     
 8.旋转数组的最小数字
 -
->把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。 输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
+>把一个数组最开始的若干个元素搬到数组的末尾，我们称之为数组的旋转。输入一个非减排序的数组的一个旋转，输出旋转数组的最小元素。 例如数组{3,4,5,1,2}为{1,2,3,4,5}的一个旋转，该数组的最小值为1。 NOTE：给出的所有元素都大于0，若数组大小为0，请返回0。
 
+思路：初次思考，阅读题目之后，发现只要找到了节点N<N+1，则N+1节点即为最小元素。不过这个方法等于遍历了整个数组，更加高效的方法是用二分法，可以将时间复杂度从O(n)减小到O(logn)。除此之外，数组为单调非递减数组，可能会出现{1,1,1,1,0,1}这样的数组，这种情况只能遍历数组。最后，应该注意程序的鲁棒性。<br><br>
+代码如下：
+
+    public int minNumberInRotateArray(int[] array) {
+            if (array.length == 0) {
+                return 0;
+            }
+            int left = 0;
+            int right = array.length - 1;
+            while (left != right) {
+                int mid = (left + right) / 2;
+                if (array[left] > array[mid]) {
+                    right = mid;
+                } else if (array[left] < array[mid]) {
+                    left = mid;
+                } else {
+                    left = left + 1;
+                    if (array[left-1] > array[left]) {
+                        return array[left];
+                    }
+                }
+            }
+            return array[left];
+    }
+    
+9.

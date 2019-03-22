@@ -8,16 +8,34 @@ package com.practice.aimtooffer;
  */
 public class MinNumberInRotateArray {
 
-    public int minNumberInRotateArray(int [] array){
-        if(array.length==0){
+    public int minNumberInRotateArray(int[] array) {
+        if (array.length == 0) {
             return 0;
         }
-        for(int i=0;i<array.length-1;i++){
-            if(array[i]>array[i+1]){
-                return array[i+1];
+        int left = 0;
+        int right = array.length - 1;
+        while (left != right) {
+            int mid = (left + right) / 2;
+            if (array[left] > array[mid]) {
+                right = mid;
+            } else if (array[left] < array[mid]) {
+                left = mid;
+            } else {
+                left = left + 1;
+                if (array[left-1] > array[left]) {
+                    return array[left];
+                }
             }
         }
-        return 0;
+        return array[left];
+    }
+：
+    public static void main(String[] args) {
+        int[] arrays = new int[]{1,2,3,4,5,0};
+        MinNumberInRotateArray minNumberInRotateArray = new MinNumberInRotateArray();
+        System.out.println(minNumberInRotateArray.minNumberInRotateArray(arrays));
+        int[] arraysTwo = new int[]{1,1,1,1,0,1};
+        System.out.println(minNumberInRotateArray.minNumberInRotateArray(arraysTwo));
     }
 
 }
