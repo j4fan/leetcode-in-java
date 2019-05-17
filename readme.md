@@ -237,7 +237,6 @@
 思路：topk问题，不需要去重，求最大topK用最小堆，求最小topK用最大堆。堆排序建堆时间复杂度O(NlogN)。<br><br>
 代码如下:
 
-```
     public ArrayList<Integer> GetLeastNumbersSolution(int[] input, int k) {
         if (input.length <= 0 || k <= 0 || k > input.length) {
             return new ArrayList();
@@ -257,4 +256,3 @@
         }
         return result;
     }
-```
