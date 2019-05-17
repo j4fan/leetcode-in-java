@@ -229,3 +229,32 @@
             Mirror(root.right);
         }
     }
+
+10.最小的K个数
+-
+>输入n个整数，找出其中最小的K个数。例如输入4,5,1,6,2,7,3,8这8个数字，则最小的4个数字是1,2,3,4。
+
+思路：topk问题，不需要去重，求最大topK用最小堆，求最小topK用最大堆。堆排序建堆时间复杂度O(NlogN)。<br><br>
+代码如下:
+
+```
+    public ArrayList<Integer> GetLeastNumbersSolution(int[] input, int k) {
+        if (input.length <= 0 || k <= 0 || k > input.length) {
+            return new ArrayList();
+        }
+        PriorityQueue<Integer> leastQueue = new PriorityQueue<>(Comparator.reverseOrder());
+        for (int num : input) {
+            if (leastQueue.size() < k) {
+                leastQueue.add(num);
+            } else if (leastQueue.peek() > num) {
+                leastQueue.poll();
+                leastQueue.add(num);
+            }
+        }
+        ArrayList result = new ArrayList();
+        while (leastQueue.size() > 0) {
+            result.add(leastQueue.poll());
+        }
+        return result;
+    }
+```
