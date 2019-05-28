@@ -1,9 +1,5 @@
 package com.practice.aimtooffer;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-
 /**
  * Problem
  * <p>
@@ -47,50 +43,71 @@ import java.util.stream.Collectors;
  */
 public class MaxSubMatrix {
 
-
-    private int maxOfMatrix(int[][]nums){
-        if(nums.length<=0||nums[0].length<=0){
+    private int maxOfMatrix(int[][] nums) {
+        if (nums.length <= 0 || nums[0].length <= 0) {
             throw new RuntimeException("矩阵输入不合法");
         }
-        int sum=0,dpl=0,dpc=0;
-        for(int i=0;i<nums.length;i++){
-            for(int j=0;j<nums[0].length;j++){
-
+        int max = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i; j < nums.length; j++) {
+                int tmpmax = 0;
+                int dp = 0;
+                for (int k = 0; k < nums[0].length; k++) {
+                    if (dp < 0) {
+                        dp = sumOfColumn(i, j, k, nums);
+                    } else {
+                        dp = dp + sumOfColumn(i, j, k, nums);
+                    }
+                    if (dp > tmpmax) {
+                        tmpmax = dp;
+                    }
+                }
+                if (tmpmax > max) {
+                    max = tmpmax;
+                }
             }
         }
-        return 0;
+        return max;
     }
 
-    private List maxOfArray(int[] nums) {
+    /**
+     *
+     */
+    private int sumOfColumn(int start, int end, int column, int[][] nums) {
+        int sum = 0;
+        for (int i = start; i <= end; i++) {
+            sum += nums[i][column];
+        }
+        return sum;
+    }
+
+    private int maxOfArray(int[] nums) {
         if (nums.length <= 0) {
             throw new RuntimeException("数组输入不合法");
         }
         int result = 0, dp = 0;
-        List<Integer> resultList = null;
-        List<Integer> tmpList = new ArrayList<>();
         for (int i = 0; i < nums.length; i++) {
-            if(dp<0){
+            if (dp < 0) {
                 dp = nums[i];
-                tmpList.clear();
-                tmpList.add(nums[i]);
-            }else{
-                dp = dp+nums[i];
-                tmpList.add(nums[i]);
+            } else {
+                dp = dp + nums[i];
             }
             if (dp > result) {
                 result = dp;
-                resultList = new ArrayList<>(tmpList);
             }
         }
         //返回sum
-        //return result;
-        //返回结果子数组
-        return resultList;
+        return result;
     }
 
     public static void main(String[] args) {
+        //test max of array
         MaxSubMatrix maxSubMatrix = new MaxSubMatrix();
-        int[] nums = new int[]{0, -2, -7, 0,6, 9,-1,8, 2, -6, 2};
-        System.out.println(maxSubMatrix.maxOfArray(nums).stream().map(i->i.toString()).collect(Collectors.joining(",")));
+        int[] nums = new int[]{0, -2, -7, 0, 6, 9, -1, 8, 2, -6, 2};
+        System.out.println(maxSubMatrix.maxOfArray(nums));
+
+        //test max of matrix
+        int[][] matrix = new int[][]{{0, -2, -7, 0}, {9,2,-6,2}, {-4,1,-4,1}, {-1,8,0,-2}};
+        System.out.println(maxSubMatrix.maxOfMatrix(matrix));
     }
 }
