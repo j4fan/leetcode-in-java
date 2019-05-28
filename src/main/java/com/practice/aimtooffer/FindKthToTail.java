@@ -1,7 +1,7 @@
 package com.practice.aimtooffer;
 
 /**
- * 输入一个链表，输出该链表中倒数第k个结点。
+ * task 4输入一个链表，输出该链表中倒数第k个结点。
  */
 public class FindKthToTail {
 

@@ -2,31 +2,28 @@ package com.practice.aimtooffer;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * 从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+ * task12从上往下打印出二叉树的每个节点，同层节点从左至右打印。
  */
 public class PrintBinaryTree {
 
     public static ArrayList<Integer> printFromTopToBottom(TreeNode root) {
-        ArrayList<Integer> printList = new ArrayList<>();
-        Queue<TreeNode> nodeArrayList = new LinkedBlockingQueue<>();
-        if (root != null) {
-            nodeArrayList.offer(root);
-        }
-        while (!nodeArrayList.isEmpty()) {
-            TreeNode node = nodeArrayList.poll();
-            printList.add(node.val);
-            if (node.left != null) {
-                nodeArrayList.offer(node.left);
+        ArrayList<Integer> resultList = new ArrayList();
+        LinkedBlockingQueue<TreeNode> priorityQueue = new LinkedBlockingQueue<>();
+        priorityQueue.offer(root);
+        while(!priorityQueue.isEmpty()){
+            TreeNode node =priorityQueue.poll();
+            resultList.add(node.val);
+            if(node.left!=null){
+                priorityQueue.offer(node.left);
             }
-            if (node.right != null) {
-                nodeArrayList.offer(node.right);
+            if(node.right!=null){
+                priorityQueue.offer(node.right);
             }
         }
-        return printList;
+        return resultList;
     }
 
     public static class TreeNode {
@@ -49,9 +46,6 @@ public class PrintBinaryTree {
         root.right = secondRight;
         secondLeft.left = thirdLeft;
         List list = printFromTopToBottom(root);
-        list.forEach(i->{
-            System.out.println(i);
-        });
-
+        list.forEach(i-> System.out.println(i));
     }
 }

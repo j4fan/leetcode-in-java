@@ -261,15 +261,15 @@
 -
 >已知矩阵的大小定义为矩阵中所有元素的和。
  给定一个矩阵，你的任务是找到最大的非空(大小至少是1 * 1)子矩阵。
- 比如，如下4 * 4的矩阵
- 0 -2 -7 0
- 9 2 -6 2
- -4 1 -4 1
- -1 8 0 -2
- 的最大子矩阵是
- 9 2
- -4 1
- -1 8
+ 比如，如下4 * 4的矩阵<br>
+ 0 -2 -7 0<br>
+ 9 2 -6 2<br>
+ -4 1 -4 1<br>
+ -1 8 0 -2<br>
+ 的最大子矩阵是<br>
+ 9 2<br>
+ -4 1<br>
+ -1 8<br>
  这个子矩阵的大小是15。
  
 总体思路：先简化为一维数组如何求最大子数组的问题，再讲二维数组压缩，转化为一维数组求最大子数组的问题。
@@ -284,3 +284,29 @@
 
 步骤二：将二维数组遍历所有的行组成的矩阵，i(0<i<n)行,j(i<j<n),i,j行之间的矩阵按列求和，即转换为一维数组的求最大子数组的问题。<br>
 代码参考 MaxSubMatrix
+
+12.打印二叉树(同层从左往右)
+-
+>从上往下打印出二叉树的每个节点，同层节点从左至右打印。
+
+思路：首先需要建立一个先入先出的队列，依次将node从上往下遍历，随后进行1.将队列最后的值出队，并将出队的节点的值加入resultList2.将孩子加入队列。
+
+代码如下：<br>
+```
+public static ArrayList<Integer> printFromTopToBottom(TreeNode root) {
+    ArrayList<Integer> resultList = new ArrayList();
+    LinkedBlockingQueue<TreeNode> priorityQueue = new LinkedBlockingQueue<>();
+    priorityQueue.offer(root);
+    while(!priorityQueue.isEmpty()){
+        TreeNode node =priorityQueue.poll();
+        resultList.add(node.val);
+        if(node.left!=null){
+            priorityQueue.offer(node.left);
+        }
+        if(node.right!=null){
+            priorityQueue.offer(node.right);
+        }
+    }
+    return resultList;
+}
+```
