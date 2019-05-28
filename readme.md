@@ -289,22 +289,35 @@
 -
 >从上往下打印出二叉树的每个节点，同层节点从左至右打印。
 
-思路：首先需要建立一个先入先出的队列，依次将node从上往下遍历，随后进行1.将队列最后的值出队，并将出队的节点的值加入resultList2.将孩子加入队列。
+思路：注意代码健壮性。首先需要建立一个先入先出的队列，然后遍历树的每一层，可以用start,end两个数字当做坐标，当上层遍历结束时，上层节点的孩子都加入了队列，队列中剩余节点数量为end.
 
 代码如下：<br>
 ```
-public static ArrayList<Integer> printFromTopToBottom(TreeNode root) {
-    ArrayList<Integer> resultList = new ArrayList();
-    LinkedBlockingQueue<TreeNode> priorityQueue = new LinkedBlockingQueue<>();
-    priorityQueue.offer(root);
-    while(!priorityQueue.isEmpty()){
-        TreeNode node =priorityQueue.poll();
-        resultList.add(node.val);
-        if(node.left!=null){
-            priorityQueue.offer(node.left);
+public static ArrayList<ArrayList<Integer>> printFromTopToBottom(TreeNode root) {
+    ArrayList<ArrayList<Integer>> resultList = new ArrayList();
+    if (root == null) {
+        return resultList;
+    }
+    Queue<TreeNode> queue = new LinkedList<>();
+    queue.offer(root);
+    int start = 0;
+    int end = 1;
+    ArrayList<Integer> rowList = new ArrayList<>();
+    while (!queue.isEmpty()) {
+        TreeNode node = queue.poll();
+        rowList.add(node.val);
+        start++;
+        if (node.left != null) {
+            queue.add(node.left);
         }
-        if(node.right!=null){
-            priorityQueue.offer(node.right);
+        if (node.right != null) {
+            queue.add(node.right);
+        }
+        if (start == end) {
+            start = 0;
+            end = queue.size();
+            resultList.add(rowList);
+            rowList = new ArrayList<>();
         }
     }
     return resultList;
