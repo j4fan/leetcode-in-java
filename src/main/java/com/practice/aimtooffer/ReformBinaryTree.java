@@ -1,8 +1,7 @@
 package com.practice.aimtooffer;
 
-import java.util.Arrays;
-
 /**
+ * task 15
  * 输入某二叉树的前序遍历和中序遍历的结果，请重建出该二叉树。
  * 假设输入的前序遍历和中序遍历的结果中都不含重复的数字。
  * 例如输入前序遍历序列{1,2,4,7,3,5,6,8}和中序遍历序列{4,7,2,1,5,3,8,6}，
@@ -11,26 +10,27 @@ import java.util.Arrays;
 public class ReformBinaryTree {
 
     public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
-        if (pre.length == 0) {
+        if (pre.length == 0 || in.length == 0) {
             return null;
         }
         TreeNode node = new TreeNode(pre[0]);
-        int count = 0;
-        for (int i = 0; i < in.length; i++) {
+        int index = 0;
+        for (int i = 0; i < pre.length; i++) {
             if (pre[0] == in[i]) {
-                count = i;
                 break;
             }
+            index++;
         }
-
-        int[] leftFront = Arrays.copyOfRange(pre, 1, count + 1);
-        int[] leftMiddle = Arrays.copyOfRange(in, 0, count);
-        int[] rightFront = Arrays.copyOfRange(pre, count + 1, pre.length);
-        int[] rightMiddle = Arrays.copyOfRange(in, count + 1, pre.length);
-
-        node.left = reConstructBinaryTree(leftFront, leftMiddle);
-        node.right = reConstructBinaryTree(rightFront, rightMiddle);
-
+        int[] leftleft = new int[index];
+        int[] leftright = new int[index];
+        System.arraycopy(pre,1,leftleft,0,index);
+        System.arraycopy(in,0,leftright,0,index);
+        node.left = reConstructBinaryTree(leftleft, leftright);
+        int[] rightleft = new int[pre.length - index-1];
+        int[] rightright = new int[pre.length - index-1];
+        System.arraycopy(pre,index+1,rightleft,0,pre.length - index-1);
+        System.arraycopy(in,index+1,rightright,0,pre.length - index-1);
+        node.right = reConstructBinaryTree(rightleft, rightright);
         return node;
     }
 
