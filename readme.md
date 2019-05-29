@@ -323,3 +323,82 @@ public static ArrayList<ArrayList<Integer>> printFromTopToBottom(TreeNode root) 
     return resultList;
 }
 ```
+
+13.打印二叉树(之字行)
+---
+>请实现一个函数按照之字形打印二叉树，即第一行按照从左到右的顺序打印，第二层按照从右至左的顺序打印，第三行按照从左到右的顺序打印，其他行以此类推。
+
+思路：注意代码健壮性。之字型打印参考按层数打印，区别在于如果直接reverse，时间复杂度会比较高，利用Linkedlist双向链表的特性，遍历head的时候，从尾部add,遍历tail的时候，从头部add,依然采用index来划分层数。
+
+代码如下:<br>
+
+```
+public ArrayList<ArrayList<Integer>> print(TreeNode pRoot) {
+    ArrayList<ArrayList<Integer>> resultList = new ArrayList<>();
+    LinkedList<TreeNode> nodes = new LinkedList<>();
+    if (pRoot == null) return resultList;
+    nodes.add(pRoot);
+    int i = 0;
+    int start = 0;
+    int end = 1;
+    ArrayList<Integer> rowList = new ArrayList<>();
+    while (!nodes.isEmpty()) {
+        TreeNode node;
+        if ((i & 1) == 0) {
+            node = nodes.removeLast();
+            if (node.left != null) {
+                nodes.addFirst(node.left);
+            }
+            if (node.right != null) {
+                nodes.addFirst(node.right);
+            }
+        } else {
+            node = nodes.removeFirst();
+            if (node.right != null) {
+                nodes.addLast(node.right);
+            }
+            if (node.left != null) {
+                nodes.addLast(node.left);
+            }
+        }
+        rowList.add(node.val);
+        start++;
+
+        if (start == end) {
+            i++;
+            start = 0;
+            end = nodes.size();
+            resultList.add(rowList);
+            rowList = new ArrayList<>();
+        }
+    }
+    return resultList;
+}
+
+```
+
+14.两个栈实现队列
+>用两个栈来实现一个队列，完成队列的Push和Pop操作。 队列中的元素为int类型。
+
+思路:栈的特点是先入后出，队列的特点是先入先出(FIFO),用stack1用来存新的元素，stack2用来pop，如果stack2为空，一次性将stack1中的元素导入到stack2中。
+
+代码如下:<br>
+
+```
+public void push(int node) {
+    stack1.push(node);
+}
+
+public int pop() {
+    if (stack1.isEmpty() && stack2.isEmpty()) {
+        return -1;
+    }
+    if (stack2.isEmpty()) {
+        while (!stack1.isEmpty()) {
+            stack2.push(stack1.pop());
+        }
+    }
+    return stack2.pop();
+}
+
+```
