@@ -13,10 +13,10 @@ public class ReverseList {
         ListNode cur = head.next;
         head.next = null;
         while (cur != null) {
-            ListNode tmp = cur.next;
-            cur.next = pre;
-            pre = cur;
-            cur = tmp;
+            ListNode tmp = cur;
+            cur = cur.next;
+            tmp.next = pre;
+            pre = tmp;
         }
         return pre;
     }
@@ -34,9 +34,11 @@ public class ReverseList {
         ListNode head = new ListNode(0);
         ListNode second = new ListNode(1);
         ListNode third = new ListNode(2);
+        ListNode forth = new ListNode(3);
         head.next = second;
         second.next = third;
-        third.next = null;
+        third.next = forth;
+        forth.next = null;
         ListNode reverseHead = reverseList(head);
         while (reverseHead != null) {
             System.out.println(reverseHead.val);

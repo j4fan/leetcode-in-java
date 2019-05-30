@@ -475,3 +475,28 @@ public static String replaceSpace(StringBuffer str) {
     return str.toString();
 }
 ```
+
+17.反转链表
+---
+>输入一个链表，反转链表后，输出新链表的表头。
+
+思路：通过两个指针的移动操作来实现，pre指针指向head,cur指针指向head.next。循环每执行一次，cur成为后面链表的head,pre成为前面链表的head，知道最后,cur为null停止。
+
+代码如下:
+```
+public static ListNode reverseList(ListNode head) {
+    if (head == null || head.next == null) {
+        return head;
+    }
+    ListNode pre = head;
+    ListNode cur = head.next;
+    head.next = null;
+    while (cur != null) {
+        ListNode tmp = cur;
+        cur = cur.next;
+        tmp.next = pre;
+        pre = tmp;
+    }
+    return pre;
+}
+```
