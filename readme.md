@@ -441,3 +441,37 @@ public TreeNode reConstructBinaryTree(int[] pre, int[] in) {
     return node;
 }
 ```
+
+16.替换字符串空格
+---
+>请实现一个函数，将一个字符串中的每个空格替换成“%20”。例如，当字符串为We Are Happy.则经过替换之后的字符串为We%20Are%20Happy
+
+思路:首先需要知道有多少空格，遍历一遍求解，其次，需要新建一个新的char数组，然后一次按照顺序，copy字符，并且在遇到空字符的时候，进行替换。
+用java操作的话有一个技巧，即StringBuffer的setLength()方法，也是进行一次替换，但是延长了char数组的元素数，然后从后向前进行填充。
+
+代码如下:
+```
+public static String replaceSpace(StringBuffer str) {
+    int oldLength = str.length();
+    int countOfBlank = 0;
+    for(int i =0;i<str.length();i++){
+        if(str.charAt(i)==' '){
+            countOfBlank++;
+        }
+    }
+    int numberOfBlank=0;
+    int newLength = oldLength+countOfBlank*2;
+    str.setLength(newLength);
+    for(int i=0;i<oldLength;i++){
+        if(str.charAt(oldLength-i-1)==' '){
+            str.setCharAt(newLength-i-1-numberOfBlank*2,'0');
+            str.setCharAt(newLength-i-2-numberOfBlank*2,'2');
+            str.setCharAt(newLength-i-3-numberOfBlank*2,'%');
+            numberOfBlank++;
+        }else{
+            str.setCharAt(newLength-i-1-numberOfBlank*2,str.charAt(oldLength-i-1));
+        }
+    }
+    return str.toString();
+}
+```
