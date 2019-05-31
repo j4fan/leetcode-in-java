@@ -1,5 +1,8 @@
 package com.practice.aimtooffer;
 
+/**
+ * task20序列化二叉树
+ */
 public class SerializeBinaryTree {
     private static int flag = -1;
 

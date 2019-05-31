@@ -3,7 +3,7 @@ package com.practice.aimtooffer;
 import java.util.ArrayList;
 
 /**
- * 输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。
+ * task18输入一个链表，按链表值从尾到头的顺序返回一个ArrayList。
  */
 public class ReversePrintList {
     private ArrayList<Integer> list = new ArrayList<>();

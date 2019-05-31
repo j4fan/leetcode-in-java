@@ -500,3 +500,50 @@ public static ListNode reverseList(ListNode head) {
     return pre;
 }
 ```
+
+18.逆序打印链表
+---
+>输入一个链表，按链表值从尾到头的顺序返回一个ArrayList
+
+思路:采用递归的方法，没次递归时，将该节点加入一个静态的list中。
+
+代码如下:
+```
+public ArrayList<Integer> printListFromTailToHead(ListNode listNode) {
+    if (listNode != null) {
+        printListFromTailToHead(listNode.next);
+        list.add(listNode.val);
+    }
+    return list;
+}
+```
+
+19.有序二维数组中的查找
+---
+>在一个二维数组中（每个一维数组的长度相同），每一行都按照从左到右递增的顺序排序，每一列都按照从上到下递增的顺序排序。请完成一个函数，输入这样的一个二维数组和一个整数，判断数组中是否含有该整数。
+
+思路:从该二维数组的左下角开始搜索，如果数字比当前节点大，则向右走一步，如果比当前节点小，则向上走一步。
+
+代码如下:
+```
+public static boolean find(int target, int[][] array) {
+    int row = array.length - 1;
+    int col = 0;
+    while (row >= 0 && col <= array[0].length - 1) {
+        if (array[row][col] == target) {
+            return true;
+        } else if (array[row][col] < target) {
+            col++;
+            continue;
+        } else {
+            row--;
+            continue;
+        }
+    }
+    return false;
+}
+```
+
+20.序列化二叉树
+---
+待续...
