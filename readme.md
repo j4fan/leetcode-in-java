@@ -544,6 +544,29 @@ public static boolean find(int target, int[][] array) {
 }
 ```
 
-20.序列化二叉树
+20.N*N矩阵逆时针旋转90度
 ---
-待续...
+>讲一个N*N的矩阵顺时针旋转90度，并打印出来
+
+思路:逆时针旋转分两步操作1.沿45度对角线交换2.沿垂直方向的中等分线交换。
+
+代码如下:
+
+```
+private int[][] rotate(int[][] source) {
+    //先沿对角线旋转 source[i][j]->source[j][i]
+    for (int i = 0; i < source.length; i++) {
+        for (int j = 0; j < i; j++) {
+            swap(source,i,j);
+        }
+    }
+    //在沿中心线替换
+    for (int i = 0; i < source.length / 2; i++) {
+        for (int j = 0; j < source[0].length; j++) {
+            swapVerticle(source,i,j);
+        }
+    }
+    return source;
+}
+```
+
