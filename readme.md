@@ -598,3 +598,37 @@ private int[] getTarget(int[] nums, int target) {
     throw new RuntimeException("未找到结果");
 }
 ```
+
+22.序列化二叉树
+---
+>序列化二叉树
+
+思路:采用前序遍历，当叶子遇到叶子节点时用某个特殊字符代替，反序列化时采用递归
+
+代码如下:
+
+```
+public static String serialize(TreeNode root) {
+    if(root==null){
+        return EMPTY_MARK+"";
+    }
+    StringBuffer sb = new StringBuffer();
+    sb.append(root.val);
+    sb.append(serialize(root.left));
+    sb.append(serialize(root.right));
+    return sb.toString();
+}
+
+public static TreeNode deserialize(String str) {
+    flag++;
+    if(flag>=str.length()) return null;
+    TreeNode node = null;
+    if(EMPTY_MARK!=str.charAt(flag)){
+        node = new TreeNode(Integer.parseInt(str.substring(flag,flag+1)));
+        node.left = deserialize(str);
+        node.right = deserialize(str);
+    }
+    return node;
+}
+
+```

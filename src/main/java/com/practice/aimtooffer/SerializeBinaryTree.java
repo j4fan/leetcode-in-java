@@ -1,36 +1,35 @@
 package com.practice.aimtooffer;
 
 /**
- * task20序列化二叉树
+ * task22序列化二叉树
+ * 思路:前序遍历
  */
 public class SerializeBinaryTree {
     private static int flag = -1;
+    private static final char EMPTY_MARK = '#';
 
     public static String serialize(TreeNode root) {
-        StringBuffer sb = new StringBuffer();
-        if (root == null) {
-            sb.append("#,");
-            return sb.toString();
+        if(root==null){
+            return EMPTY_MARK+"";
         }
-        sb.append(root.val + ",");
+        StringBuffer sb = new StringBuffer();
+        sb.append(root.val);
         sb.append(serialize(root.left));
         sb.append(serialize(root.right));
         return sb.toString();
     }
 
+
     public static TreeNode deserialize(String str) {
         flag++;
-        if (str == null || str.length() == 0) {
-            return null;
-        }
-        String[] strs = str.split(",");
-        if (!strs[flag].equals("#")) {
-            TreeNode node = new TreeNode(Integer.parseInt(strs[flag]));
+        if(flag>=str.length()) return null;
+        TreeNode node = null;
+        if(EMPTY_MARK!=str.charAt(flag)){
+            node = new TreeNode(Integer.parseInt(str.substring(flag,flag+1)));
             node.left = deserialize(str);
             node.right = deserialize(str);
-            return node;
         }
-        return null;
+        return node;
     }
 
 
@@ -50,6 +49,7 @@ public class SerializeBinaryTree {
         TreeNode left = new TreeNode(6);
         TreeNode right = new TreeNode(6);
         head.left = left;
+        head.right = right;
         TreeNode leftleft = new TreeNode(5);
         TreeNode leftright = new TreeNode(7);
         TreeNode rightleft = new TreeNode(7);
@@ -62,6 +62,6 @@ public class SerializeBinaryTree {
         System.out.println(serialize(head));
 
         TreeNode node = deserialize(serialize(head));
-        System.out.println("test");
+        System.out.println(serialize(node));
     }
 }
