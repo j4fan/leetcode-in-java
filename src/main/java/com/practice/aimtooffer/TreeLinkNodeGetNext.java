@@ -6,26 +6,23 @@ package com.practice.aimtooffer;
  */
 public class TreeLinkNodeGetNext {
 
-    public TreeLinkNode GetNext(TreeLinkNode pNode) {
-        if (pNode == null) {
-            return null;
-        }
-        if (pNode.right != null) {
+    public TreeLinkNode GetNext(TreeLinkNode pNode){
+        if(pNode==null) return null;
+        if(pNode.right==null) {
+            while(true){
+                if(pNode.next==null) return null;
+                if(pNode.next.right==pNode){ pNode = pNode.next;}
+                else {
+                    return pNode.next;
+                }
+            }
+        }else{
             TreeLinkNode node = pNode.right;
-            while (node.left != null) {
+            while(node.left!=null){
                 node = node.left;
             }
             return node;
-        } else if (pNode.next != null) {
-            while (pNode.next != null) {
-                if (pNode.next.left == pNode) {
-                    return pNode.next;
-                } else {
-                    pNode = pNode.next;
-                }
-            }
         }
-        return null;
     }
 
 

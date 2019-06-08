@@ -632,3 +632,51 @@ public static TreeNode deserialize(String str) {
 }
 
 ```
+
+23.树的高度
+---
+>求一棵树的高度
+
+思路:左右子树的较大值递归求解
+代码如下:
+```
+public int TreeDepth(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    int left = TreeDepth(root.left);
+    int right = TreeDepth(root.right);
+    return left > right ? 1 + left : 1 + right;
+}
+```
+
+24.中序遍历的下个节点
+---
+>给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针
+
+思路:每个节点有下一个节点的指针，那么下面几种情况
+- 当前节点右节点不为空。此时需要用中序遍历右节点，一旦左节点不为`null`，则优先返回左节点。
+- 当前节点右节点为空。此时判断该节点是否为下个节点的左孩子，如果是则返回下个节点。如果是下个节点的右孩子，需要递归判断，下个节点是否为下下个节点的右孩子。直达是左孩子的时候才能返回下个节点。
+
+此题注意为空的情况需要排除，代码如下:
+```
+public TreeLinkNode GetNext(TreeLinkNode pNode){
+    if(pNode==null) return null;
+    if(pNode.right==null) {
+        while(true){
+            if(pNode.next==null) return null;
+            if(pNode.next.right==pNode){ pNode = pNode.next;}
+            else {
+                return pNode.next;
+            }
+        }
+    }else{
+        TreeLinkNode node = pNode.right;
+        while(node.left!=null){
+            node = node.left;
+        }
+        return node;
+    }
+}
+
+```
