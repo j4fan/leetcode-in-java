@@ -599,7 +599,147 @@ private int[] getTarget(int[] nums, int target) {
 }
 ```
 
+<<<<<<< HEAD
 22.Zconvert
+---
+>将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。 <br>
+> 比如输入字符串为 "LEETCODEISHIRING" 行数为 3 时，排列如下：<br>
+>L   C   I   R <br>
+>E T O E S I I G <br>
+>E   D   H   N <br>
+>之后，你的输出需要从左往右逐行读取，产生出一个新的字符串，比如："LCIRETOESIIGEDHN"。<br>
+>请你实现这个将字符串进行指定行数变换的函数： <br>
+>string convert(string s, int numRows); <br>
+>示例 1: <br>
+>输入: s = "LEETCODEISHIRING", numRows = 3 <br>
+>输出: "LCIRETOESIIGEDHN" <br>
+>示例 2: <br>
+>输入: s = "LEETCODEISHIRING", numRows = 4 <br>
+>输出: "LDREOEIIECIHNTSG" <br>
+>解释: <br>
+>L     D     R <br>
+>E   O E   I I <br>
+>E C   I H   N <br>
+>T     S     G <br>
+
+思路<br>
+通过从左向右迭代字符串，我们可以轻松地确定字符位于 Z 字形图案中的哪一行。<br>
+算法<br>
+可以使用当前行和当前方向这两个变量对合适的行进行跟踪。只有当我们向上移动到最上面的行或向下移动到最下面的行时，当前方向才会发生改变。<br>
+
+```
+    public String convert(String s, int numRows) {
+        if(numRows<=0){
+            throw new RuntimeException("numRows不能小于0");
+        }
+        if(numRows==1){
+            return s;
+        }
+        List<StringBuffer> sbList = new ArrayList<>();
+        for(int i=0;i<numRows;i++){
+            sbList.add(new StringBuffer());
+        }
+        StringBuffer sb = new StringBuffer();
+        boolean inorder = false;
+        int cur = 0;
+        for(char c:s.toCharArray()){
+            sbList.get(cur).append(c);
+            if(cur ==0||cur==numRows-1){
+                inorder = !inorder;
+            }
+            cur = inorder?cur+1:cur-1;
+        }
+        sbList.forEach(list->{
+            sb.append(list.toString());
+        });
+        return sb.toString();
+    }
+
+```
+=======
+22.序列化二叉树
+---
+>序列化二叉树
+
+思路:采用前序遍历，当叶子遇到叶子节点时用某个特殊字符代替，反序列化时采用递归
+
+代码如下:
+
+```
+public static String serialize(TreeNode root) {
+    if(root==null){
+        return EMPTY_MARK+"";
+    }
+    StringBuffer sb = new StringBuffer();
+    sb.append(root.val);
+    sb.append(serialize(root.left));
+    sb.append(serialize(root.right));
+    return sb.toString();
+}
+
+public static TreeNode deserialize(String str) {
+    flag++;
+    if(flag>=str.length()) return null;
+    TreeNode node = null;
+    if(EMPTY_MARK!=str.charAt(flag)){
+        node = new TreeNode(Integer.parseInt(str.substring(flag,flag+1)));
+        node.left = deserialize(str);
+        node.right = deserialize(str);
+    }
+    return node;
+}
+
+```
+
+23.树的高度
+---
+>求一棵树的高度
+
+思路:左右子树的较大值递归求解
+代码如下:
+```
+public int TreeDepth(TreeNode root) {
+    if (root == null) {
+        return 0;
+    }
+    int left = TreeDepth(root.left);
+    int right = TreeDepth(root.right);
+    return left > right ? 1 + left : 1 + right;
+}
+```
+
+24.中序遍历的下个节点
+---
+>给定一个二叉树和其中的一个结点，请找出中序遍历顺序的下一个结点并且返回。注意，树中的结点不仅包含左右子结点，同时包含指向父结点的指针
+
+思路:每个节点有下一个节点的指针，那么下面几种情况
+- 当前节点右节点不为空。此时需要用中序遍历右节点，一旦左节点不为`null`，则优先返回左节点。
+- 当前节点右节点为空。此时判断该节点是否为下个节点的左孩子，如果是则返回下个节点。如果是下个节点的右孩子，需要递归判断，下个节点是否为下下个节点的右孩子。直达是左孩子的时候才能返回下个节点。
+
+此题注意为空的情况需要排除，代码如下:
+```
+public TreeLinkNode GetNext(TreeLinkNode pNode){
+    if(pNode==null) return null;
+    if(pNode.right==null) {
+        while(true){
+            if(pNode.next==null) return null;
+            if(pNode.next.right==pNode){ pNode = pNode.next;}
+            else {
+                return pNode.next;
+            }
+        }
+    }else{
+        TreeLinkNode node = pNode.right;
+        while(node.left!=null){
+            node = node.left;
+        }
+        return node;
+    }
+}
+
+```
+
+25.Zconvert
 ---
 >将一个给定字符串根据给定的行数，以从上往下、从左到右进行 Z 字形排列。 <br>
 > 比如输入字符串为 "LEETCODEISHIRING" 行数为 3 时，排列如下：<br>
