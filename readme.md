@@ -795,3 +795,34 @@ public TreeLinkNode GetNext(TreeLinkNode pNode){
     }
 
 ```
+
+26.约瑟夫环
+---
+>m个人围成一个圈，指定一个数字n,从第一个人开始报数，每轮报到n的选手出局，由下一个人接着从头开始报，最后一个人是赢家。其中m>1,n>2。
+
+思路1<br>
+将m个人组成一个首位相连的环形链表，然后遍历链表，如果遇到数字n，将该Node从链表中剔除。<br>
+
+时间复杂度<br>
+删除一个人需要时间为O(n)，m个人需要删(m-1)次，时间复杂度为O(m-1),所以总体复杂度为O(mn)
+
+代码<br>
+```
+//形成循环链表
+        Node head = createCircleNode(m);
+        int count =1;
+        Node pre = null;
+        Node cur = head;
+        while(!cur.equals(pre)){
+            if(count==n){
+                count =1 ;
+                cur = cur.next;
+                pre.next = cur;
+            }else{
+                pre = cur;
+                cur = cur.next;
+                count++;
+            }
+        }
+        return cur.value;
+```
